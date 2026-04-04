@@ -8,9 +8,8 @@ public class HardshipApplication
     public decimal Expenses {get; set;}
     public string HardshipReason {get; set;}
     public string Status {get; set;} = "Pending";
-    public DateTime CreateAt {get; init;}
-    public DateTime UpdateAt {get; set;}
-
+    public DateTime CreatedAt {get; init;}
+    public DateTime UpdatedAt {get; set;}
     public Applicant Applicant{get; set;}
     public ApplicationApproval ApplicationApproval{get; set;}
 
@@ -24,7 +23,7 @@ public class HardshipApplication
         Expenses = expenses;
         HardshipReason = hardshipReason;
         Status = "Pending";
-        CreateAt = DateTime.UtcNow;
-        UpdateAt = DateTime.UtcNow;
+        CreatedAt = DateTime.UtcNow;
+        UpdatedAt = DateTime.UtcNow;
     }
 }

@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+  <ProjectReference Include="..\HardshipApp.Models\HardshipApp.Models.csproj" />
+  <ProjectReference Include="..\HardshipApp.Repository\HardshipApp.Repository.csproj" />
+  </ItemGroup>
+
 </Project>

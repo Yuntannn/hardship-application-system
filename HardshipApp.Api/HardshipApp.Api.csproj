@@ -16,6 +16,8 @@
   <ItemGroup>
     <ProjectReference Include="..\HardshipApp.DataAccess\HardshipApp.DataAccess.csproj" />
     <ProjectReference Include="..\HardshipApp.Common\HardshipApp.Common.csproj" />
+    <ProjectReference Include="..\HardshipApp.Repository\HardshipApp.Repository.csproj" />
+    <ProjectReference Include="..\HardshipApp.Service\HardshipApp.Service.csproj" />
   </ItemGroup>
 
 </Project>

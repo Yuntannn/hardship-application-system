@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HardshipApp.DataAccess\HardshipApp.DataAccess.csproj" />
+    <ProjectReference Include="..\HardshipApp.Common\HardshipApp.Common.csproj" />
   </ItemGroup>
 
 </Project>

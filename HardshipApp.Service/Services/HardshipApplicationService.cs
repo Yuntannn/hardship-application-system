@@ -1,6 +1,6 @@
 using HardshipApp.Models.Entities;
 using HardshipApp.Repository.Interfaces;
-using HardshipApp.Service.DTOs;
+using HardshipApp.Service.DTOs.Application;
 using HardshipApp.Service.Interfaces;
 using HardshipApp.Service.Mappers;
 
@@ -73,5 +73,12 @@ public class HardshipApplicationService : IHardshipApplicationService
         await _hardshipApplicationRepository.UpdateAsync(application);
         var applicant = await _applicantRepository.GetByIdAsync(application.ApplicantId);
         return HardshipApplicationMapper.ToResponseDto(application, applicant!);
+    }
+
+    public async Task DeleteAsync(Guid id)
+    {
+        var application = await _hardshipApplicationRepository.GetByIdAsync(id);
+        if (application == null) throw new KeyNotFoundException($"Application {id} not found.");
+        await _hardshipApplicationRepository.DeleteAsync(id);
     }
 }

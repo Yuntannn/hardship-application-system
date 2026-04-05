@@ -1,5 +1,5 @@
 using HardshipApp.Models.Entities;
-using HardshipApp.Service.DTOs;
+using HardshipApp.Service.DTOs.Application;
 
 namespace HardshipApp.Service.Mappers;
 

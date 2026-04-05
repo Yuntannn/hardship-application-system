@@ -1,4 +1,4 @@
-using HardshipApp.Service.DTOs;
+using HardshipApp.Service.DTOs.Application;
 namespace HardshipApp.Service.Interfaces;
 public interface IHardshipApplicationService
 {
@@ -6,4 +6,5 @@ public interface IHardshipApplicationService
     Task<IEnumerable<HardshipApplicationResponseDto>> GetAllAsync();
     Task<HardshipApplicationResponseDto> CreateAsync(CreateHardshipApplicationDto dto);
     Task<HardshipApplicationResponseDto> UpdateAsync(Guid id, UpdateHardshipApplicationDto dto);
+    Task DeleteAsync(Guid id);
 }

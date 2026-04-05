@@ -7,7 +7,7 @@ public class Applicant
     public DateOnly DateOfBirth{get; set;}
     public string Email{get; set;}
     public string? Phone{get; set;}
-    public DateTime CreateAt{get; init;}
+    public DateTime CreatedAt{get; init;}
     public ICollection<HardshipApplication> HardshipApplications {get; set;} = new List<HardshipApplication>();
     private Applicant() { } //EF Core
     public Applicant(string firstName, string lastName, DateOnly dateOfBirth, string email, string? phone = null)
@@ -18,7 +18,7 @@ public class Applicant
         DateOfBirth = dateOfBirth;
         Email = email;
         Phone = phone;
-        CreateAt = DateTime.UtcNow;
+        CreatedAt = DateTime.UtcNow;
     }
 
 

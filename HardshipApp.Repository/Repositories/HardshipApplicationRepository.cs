@@ -34,6 +34,14 @@ public class HardshipApplicationRepository : IHardshipApplicationRepository
         _context.HardshipApplications.Update(hardshipApplication);
         await _context.SaveChangesAsync();
         return hardshipApplication;
-    }   
+    }  
+
+    public async Task DeleteAsync(Guid id)
+    {
+        var application = await _context.HardshipApplications.FindAsync(id);
+        if (application == null) return;
+        _context.HardshipApplications.Remove(application);
+        await _context.SaveChangesAsync();
+    } 
 
 }

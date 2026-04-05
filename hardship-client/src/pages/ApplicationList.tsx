@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getApplications } from "../api/hardshipApi";
+import { getApplications, deleteApplication  } from "../api/hardshipApi";
 import type { HardshipApplicationResponse } from "../types/hardship";
 import { Button, Table, Alert, Typography, Space } from "antd";
 
@@ -17,6 +17,15 @@ export default function ApplicationList() {
             .catch(() => setError('Failed to load applications.'));
     }, []);
 
+    const handleDelete = async (id: string) => {
+        try {
+            await deleteApplication(id);
+            setApplications(prev => prev.filter(app => app.id !== id));
+        } catch {
+            setError('Failed to delete application.');
+        }
+    };
+
     const columns = [
         {title: 'Name', render: (_: unknown, app: HardshipApplicationResponse) => `${app.firstName} ${app.lastName}`},
         {title: 'Email', dataIndex: 'email'},
@@ -25,7 +34,10 @@ export default function ApplicationList() {
         {title: 'Status', dataIndex: 'status'},
         {title: 'Actions',
             render: (_: unknown, app: HardshipApplicationResponse) => (
-                <Button onClick={() => navigate(`/edit/${app.id}`)}>Edit</Button>
+                <Space>
+                    <Button onClick={() => navigate(`/edit/${app.id}`)}>Edit</Button>
+                    <Button danger onClick={() => handleDelete(app.id)}>Delete</Button>
+                </Space>
             ),
         },
     ];

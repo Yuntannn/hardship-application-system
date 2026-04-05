@@ -28,3 +28,7 @@ export const updateApplication = async (id: string, data: UpdateHardshipApplicat
     const response = await api.put(`/hardshipapplications/${id}`, data);
     return response.data;
 }
+
+export const deleteApplication = async (id: string): Promise<void> => {
+    await api.delete(`/hardshipapplications/${id}`);
+}

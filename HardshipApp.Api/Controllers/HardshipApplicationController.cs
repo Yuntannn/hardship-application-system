@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.ActionConstraints;
 
 namespace HardshipApp.Api.Controllers;
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/hardshipapplications")]
 public class HardshipApplicationController : ControllerBase
 {
     private readonly IHardshipApplicationService _hardshipApplicationService;

@@ -11,8 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Repositories
 builder.Services.AddScoped<IHardshipApplicationRepository, HardshipApplicationRepository>();
 builder.Services.AddScoped<IApplicantRepository, ApplicantRepository>();
+builder.Services.AddScoped<IApplicationApprovalService, ApplicationApprovalService>();
+
 // Services
 builder.Services.AddScoped<IHardshipApplicationService, HardshipApplicationService>();
+builder.Services.AddScoped<IApplicantService, ApplicantService>();
+builder.Services.AddScoped<IApplicationApprovalRepository, ApplicationApprovalRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(options => 
@@ -39,7 +43,11 @@ app.UseCors("AllowFrontend");
 app.UseAuthorization();
 app.MapControllers();
 app.UseSwagger();
-app.MapGet("/", () => Results.Redirect("/swagger"));
+if (app.Environment.IsDevelopment())
+{
+    app.MapGet("/", () => Results.Redirect("/swagger/index.html"))
+        .ExcludeFromDescription();
+}
 app.UseSwaggerUI();
 
 app.Run();

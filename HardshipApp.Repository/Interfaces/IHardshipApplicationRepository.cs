@@ -8,4 +8,5 @@ public interface IHardshipApplicationRepository
     Task<IEnumerable<HardshipApplication>> GetAllAsync();
     Task<HardshipApplication> CreateAsync(HardshipApplication application);
     Task<HardshipApplication> UpdateAsync(HardshipApplication application);
+    Task DeleteAsync(Guid id);
 }

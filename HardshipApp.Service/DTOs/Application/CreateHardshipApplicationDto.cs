@@ -1,4 +1,4 @@
-namespace HardshipApp.Service.DTOs;
+namespace HardshipApp.Service.DTOs.Application;
 public class CreateHardshipApplicationDto
 {
     public string FirstName { get; set; } = string.Empty;

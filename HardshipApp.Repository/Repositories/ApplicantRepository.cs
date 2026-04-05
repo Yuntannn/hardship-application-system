@@ -21,4 +21,16 @@ public class ApplicantRepository : IApplicantRepository
         await _context.SaveChangesAsync();
         return applicant;
     }
+
+    public async Task<IEnumerable<Applicant>> GetAllAsync()
+    {
+        return await _context.Applicants.ToListAsync();
+    }
+
+    public async Task<Applicant> UpdateAsync(Applicant applicant)
+    {
+        _context.Applicants.Update(applicant);
+        await _context.SaveChangesAsync();
+        return applicant;
+    }
 }

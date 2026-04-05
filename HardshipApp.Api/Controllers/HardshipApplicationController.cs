@@ -1,7 +1,7 @@
-using HardshipApp.Service.DTOs;
+using HardshipApp.Service.DTOs.Application;
+using HardshipApp.Service.DTOs.Approval;
 using HardshipApp.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ActionConstraints;
 
 namespace HardshipApp.Api.Controllers;
 [ApiController]
@@ -9,9 +9,11 @@ namespace HardshipApp.Api.Controllers;
 public class HardshipApplicationController : ControllerBase
 {
     private readonly IHardshipApplicationService _hardshipApplicationService;
-    public HardshipApplicationController(IHardshipApplicationService hardshipApplicationService)
+    private readonly IApplicationApprovalService _applicationApprovalService;
+    public HardshipApplicationController(IHardshipApplicationService hardshipApplicationService, IApplicationApprovalService applicationApprovalService)
     {
         _hardshipApplicationService = hardshipApplicationService;
+        _applicationApprovalService = applicationApprovalService;
     }
 
     [HttpPost]
@@ -37,9 +39,31 @@ public class HardshipApplicationController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(Guid id, UpdateHardshipApplicationDto updateHardshipApplicationDto)
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateHardshipApplicationDto updateHardshipApplicationDto)
     {
         var result = await _hardshipApplicationService.UpdateAsync(id, updateHardshipApplicationDto);
+        return Ok(result);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        await _hardshipApplicationService.DeleteAsync(id);
+        return NoContent();
+    }
+
+    [HttpPost("{id}/approvals")]
+    public async Task<IActionResult> CreateApproval(Guid id, [FromBody] CreateApprovalDto dto)
+    {
+        var result = await _applicationApprovalService.CreateAsync(id, dto);
+        return Ok(result);
+    }
+
+    [HttpGet("{id}/approvals")]
+    public async Task<IActionResult> GetApproval(Guid id)
+    {
+        var result = await _applicationApprovalService.GetByApplicationIdAsync(id);
+        if (result == null) return NotFound();
         return Ok(result);
     }
 }

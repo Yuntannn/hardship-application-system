@@ -18,11 +18,17 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(options => 
     options.UseSqlite("Data Source=hardship.db"));
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
 app.UseMiddleware<GlobalExceptionHandler>();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+app.UseSwagger();
+app.MapGet("/", () => Results.Redirect("/swagger"));
+app.UseSwaggerUI();
 
 app.Run();

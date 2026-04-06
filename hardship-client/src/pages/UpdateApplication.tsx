@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getApplicationById, updateApplication } from "../api/hardshipApi";
-import type { UpdateHardshipApplicationRequest } from "../types/hardship";
+import { ApplicationStatus, type UpdateHardshipApplicationRequest } from "../types/hardship";
 import { Button, Form, Input, InputNumber, Alert, Typography, Select } from "antd";
 
 const { Title } = Typography;
@@ -51,9 +51,10 @@ export default function UpdateApplication() {
                 </Form.Item>
                 <Form.Item name="status" label="Status" rules={[{ required: true }]}>
                     <Select>
-                        <Select.Option value="Pending">Pending</Select.Option>
-                        <Select.Option value="Approved">Approved</Select.Option>
-                        <Select.Option value="Rejected">Rejected</Select.Option>
+                        <Select.Option value={ApplicationStatus.Pending}>Pending</Select.Option>
+                        <Select.Option value={ApplicationStatus.UnderReview}>Under Review</Select.Option>
+                        <Select.Option value={ApplicationStatus.Approved}>Approved</Select.Option>
+                        <Select.Option value={ApplicationStatus.Declined}>Declined</Select.Option>
                     </Select>
                 </Form.Item>
                 <Form.Item>

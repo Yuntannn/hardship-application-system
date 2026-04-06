@@ -1,10 +1,17 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getApplications, deleteApplication  } from "../api/hardshipApi";
-import type { HardshipApplicationResponse } from "../types/hardship";
+import { ApplicationStatus, type HardshipApplicationResponse } from "../types/hardship";
 import { Button, Table, Alert, Typography, Space } from "antd";
 
 const { Title } = Typography;
+
+const statusLabels: Record<ApplicationStatus, string> = {
+    [ApplicationStatus.Pending]: "Pending",
+    [ApplicationStatus.UnderReview]: "Under Review",
+    [ApplicationStatus.Approved]: "Approved",
+    [ApplicationStatus.Declined]: "Declined",
+};
 
 export default function ApplicationList() {
     const [applications, setApplications] = useState<HardshipApplicationResponse[]>([]);
@@ -31,7 +38,7 @@ export default function ApplicationList() {
         {title: 'Email', dataIndex: 'email'},
         {title: 'Phone', dataIndex: 'phone'},
         {title: 'Expenses', dataIndex: 'expenses'},
-        {title: 'Status', dataIndex: 'status'},
+        {title: 'Status', render: (_: unknown, app: HardshipApplicationResponse) => statusLabels[app.status]},
         {title: 'Actions',
             render: (_: unknown, app: HardshipApplicationResponse) => (
                 <Space>

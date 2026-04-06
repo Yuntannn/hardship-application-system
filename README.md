@@ -16,6 +16,13 @@ A full-stack web application for managing financial hardship applications. The s
 ## Getting Started
 
 ### Backend
+First-time setup: this project uses SQLite and does not auto-apply migrations on startup, so initialize the database before running the API.
+
+If `dotnet ef` is not available on your machine, install it first:
+```bash
+dotnet tool install --global dotnet-ef
+```
+
 ```bash
 cd HardshipApp.Api
 dotnet restore
@@ -26,6 +33,8 @@ API: `http://localhost:5000`
 Swagger: `http://localhost:5000/swagger/index.html`
 
 ### Frontend
+Start the backend first, then run the frontend:
+
 ```bash
 cd hardship-client
 npm install

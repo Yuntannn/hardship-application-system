@@ -3,6 +3,8 @@ using HardshipApp.Repository.Interfaces;
 using HardshipApp.Service.DTOs.Application;
 using HardshipApp.Service.Interfaces;
 using HardshipApp.Service.Mappers;
+using Microsoft.EntityFrameworkCore;
+using HardshipApp.Common.Exceptions;
 
 namespace HardshipApp.Service.Services;
 
@@ -39,24 +41,32 @@ public class HardshipApplicationService : IHardshipApplicationService
 
     public async Task<HardshipApplicationResponseDto> CreateAsync(CreateHardshipApplicationDto createHardshipApplicationDto)
     {
-        var applicant = new Applicant(
+        try
+        {
+            var applicant = new Applicant(
             createHardshipApplicationDto.FirstName,
             createHardshipApplicationDto.LastName,
             createHardshipApplicationDto.DateOfBirth,
             createHardshipApplicationDto.Email,
             createHardshipApplicationDto.Phone
-        );
-        await _applicantRepository.CreateAsync(applicant);
+            );
+            await _applicantRepository.CreateAsync(applicant);
 
-        var application = new HardshipApplication(
-            applicant.Id,
-            createHardshipApplicationDto.Income,
-            createHardshipApplicationDto.Expenses,
-            createHardshipApplicationDto.HardshipReason
-        );
-        await _hardshipApplicationRepository.CreateAsync(application);
+            var application = new HardshipApplication(
+                applicant.Id,
+                createHardshipApplicationDto.Income,
+                createHardshipApplicationDto.Expenses,
+                createHardshipApplicationDto.HardshipReason
+            );
+            await _hardshipApplicationRepository.CreateAsync(application);
 
-        return HardshipApplicationMapper.ToResponseDto(application, applicant);
+            return HardshipApplicationMapper.ToResponseDto(application, applicant);
+        }
+        catch (DbUpdateException ex) when (ex.InnerException?.Message.Contains("UNIQUE") == true)
+        {
+            throw new ApiException("An application with this email already exists.", 400);
+        }
+        
     }
 
     public async Task<HardshipApplicationResponseDto> UpdateAsync(Guid id, UpdateHardshipApplicationDto updateHardshipApplicationDto)

@@ -8,7 +8,7 @@ public class HardshipApplication
     public Guid ApplicantId {get; init;}
     public decimal Income {get; set;}
     public decimal Expenses {get; set;}
-    public string HardshipReason {get; set;}
+    public string? HardshipReason {get; set;}
     public ApplicationStatus Status {get; set;} = ApplicationStatus.Pending;
     public DateTime CreatedAt {get; init;}
     public DateTime UpdatedAt {get; set;}

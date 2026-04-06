@@ -8,6 +8,7 @@ namespace HardshipApp.IntegrationTests;
 
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
+    private readonly string _dbName = Guid.NewGuid().ToString();
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.ConfigureServices(services =>
@@ -25,9 +26,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
                 
             // use InMemory database instead
             services.AddDbContext<AppDbContext>(options =>
-            {
-                options.UseInMemoryDatabase("TestDb");
-            });
+                options.UseInMemoryDatabase(_dbName));
 
             // make sure database is created
             var sp = services.BuildServiceProvider();
